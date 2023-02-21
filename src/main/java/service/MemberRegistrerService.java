@@ -4,13 +4,14 @@ import dao.MemberDao;
 import entity.Member;
 import exception.DuplicateMemberException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import vo.RegisterRequest;
 
 import java.time.LocalDateTime;
 
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class MemberRegistrerService {
 

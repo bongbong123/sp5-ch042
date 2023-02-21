@@ -1,13 +1,14 @@
 package config;
 
-import dao.MemberDao;
-import entity.MemberInfoPrinter;
-import entity.MemberListPrinter;
+import client.Client;
+import client.Client2;
 import entity.MemberPrinter;
-import entity.MemberSummaryPrinter;
+import controller.MemberSummaryPrinter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import service.ChangePasswordService;
 import service.MemberRegistrerService;
 
@@ -15,25 +16,8 @@ import service.MemberRegistrerService;
 public class AppCtx {
 
     @Bean
-    public MemberDao memberDao(){
-        return new MemberDao();
-    }
-
-    @Bean
-    public MemberRegistrerService memberRegistrerService(){
-        return new MemberRegistrerService(memberDao());
-    }
-
-    @Bean
-    public ChangePasswordService changePwdSvc(){
-        ChangePasswordService pwdSvc = new ChangePasswordService();
-        pwdSvc.setMemberDao(memberDao());
-        return pwdSvc;
-    }
-
-    @Bean
-    @Qualifier("pinter")
-    public MemberPrinter memberPrinter1() {
+    @Qualifier("infoPrinter")
+    public MemberPrinter memberPrinter() {
         return new MemberPrinter();
     }
 
@@ -43,15 +27,27 @@ public class AppCtx {
         return new MemberSummaryPrinter();
     }
 
-    @Bean
-    public MemberListPrinter listPrinter(){
-        return new MemberListPrinter();
-    }
 
     @Bean
-    public MemberInfoPrinter infoPrinter() {
-        MemberInfoPrinter infoPrinter = new MemberInfoPrinter();
-        infoPrinter.setPrinter(memberPrinter2());
-        return infoPrinter;
+    @Scope("prototype")
+    public Client client() {
+        Client client = new Client();
+        client.setHost("host");
+        return client;
     }
+
+    @Bean(initMethod = "connect", destroyMethod = "close")
+    public Client2 clinet2(){
+        Client2 client2 = new Client2();
+        client2.setHost("host");
+        return client2;
+    }
+
+//    @Bean
+//    public VersionPrinter versionPrinter() {
+//        VersionPrinter versionPrinter = new VersionPrinter();
+//        versionPrinter.setMajorVersion(5);
+//        versionPrinter.setMinorVersion(0);
+//        return versionPrinter;
+//    }
 }

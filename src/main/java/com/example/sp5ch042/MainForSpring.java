@@ -1,16 +1,17 @@
 package com.example.sp5ch042;
 
 import assembler.Assembler;
+import client.Client;
+import config.AppCtx;
 import dao.MemberDao;
 import entity.Member;
-import entity.MemberInfoPrinter;
 import entity.MemberPrinter;
 import exception.DuplicateMemberException;
 import exception.MemberNotFoundException;
 import exception.WrongIdPasswordException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import service.ChangePasswordService;
 import service.MemberRegistrerService;
 import vo.RegisterRequest;
@@ -24,7 +25,19 @@ public class MainForSpring {
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(AppCtx.class);
+
+        Client client1 = ctx.getBean(Client.class);
+        Client client2 = ctx.getBean(Client.class);
+
+        if(client1 == client2) {
+            System.out.println("client1 == client2");
+        }
+
+        client1.send();
+
+        ctx.close();
+        /*BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         while(true) {
             System.out.println("명령어를 입력하세요:");
@@ -42,7 +55,7 @@ public class MainForSpring {
             } else if(command.startsWith("info ")) {
                 processSelectCommand(command.split(" "));
             }
-        }
+        }*/
     }
 
     private static Assembler assembler = new Assembler();

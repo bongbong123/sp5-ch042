@@ -1,4 +1,7 @@
-package entity;
+package controller;
+
+import entity.Member;
+import entity.MemberPrinter;
 
 public class MemberSummaryPrinter extends MemberPrinter {
     @Override

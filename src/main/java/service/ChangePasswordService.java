@@ -4,8 +4,10 @@ import dao.MemberDao;
 import entity.Member;
 import exception.MemberNotFoundException;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 @Setter
+@Component
 public class ChangePasswordService {
     private MemberDao memberDao;
 

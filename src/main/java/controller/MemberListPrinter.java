@@ -1,9 +1,12 @@
-package entity;
+package controller;
 
 import dao.MemberDao;
+import entity.MemberPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component("listPrinter")
 public class MemberListPrinter {
     private MemberDao memberDao;
     private MemberPrinter printer;
@@ -16,7 +19,7 @@ public class MemberListPrinter {
         this.printer = printer;
     }
     @Autowired
-    @Qualifier("printer")
+//    @Qualifier("listPrinter")
     public void setPrinter(MemberPrinter printer) {
         this.printer = printer;
     }
